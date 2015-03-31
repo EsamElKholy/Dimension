@@ -1,7 +1,7 @@
 # Dimension
 KAI GAME ENGINE PROJECT
 
-CURRENTLY based on thebennybox game engine tutorial
+CURRENTLY based on thebennybox + thecherno game engine tutorial
 
 goals of this project:
 
