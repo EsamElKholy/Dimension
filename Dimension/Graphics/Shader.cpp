@@ -1,5 +1,6 @@
 #include "Shader.h"
-
+#include <cassert>
+#include <memory>
 
 Shader::Shader()
 {
@@ -56,7 +57,7 @@ void Shader::compileShader() {
 		system("PAUSE");
 	}
 
-	for (int i = 0; i < m_shaders.size(); i++)
+	for (unsigned int i = 0; i < m_shaders.size(); i++)
 	{
 		glDeleteShader(m_shaders[i]);
 	}
@@ -64,28 +65,35 @@ void Shader::compileShader() {
 	m_shaders.clear();
 }
 
-void Shader::setUniform1f(const char *name, const GLfloat &value) const{
-	glUniform1f(glGetUniformLocation(m_program, name), value);
+void Shader::addUniforms(const std::string &name){
+	const char *temp = name.c_str();
+	GLint location = glGetUniformLocation(m_program, temp);
+
+	m_uniforms.emplace(name, location);
 }
 
-void Shader::setUniform2f(const char *name, const vec2 &value) const{
-	glUniform2f(glGetUniformLocation(m_program, name), value.x ,value.y);
+void Shader::setUniform1f(const std::string &name, const GLfloat &value) const{
+	glUniform1f(m_uniforms.at(name), value);
 }
 
-void Shader::setUniform3f(const char *name, const vec3 &value) const{
-	glUniform3f(glGetUniformLocation(m_program, name), value.x ,value.y ,value.z);
+void Shader::setUniform2f(const std::string &name, const vec2 &value) const{
+	glUniform2f(m_uniforms.at(name), value.x, value.y);
 }
 
-void Shader::setUniform4f(const char *name, const vec4 &value) const{
-	glUniform4f(glGetUniformLocation(m_program, name), value.x ,value.y ,value.z ,value.w);
+void Shader::setUniform3f(const std::string &name, const vec3 &value) const{
+	glUniform3f(m_uniforms.at(name), value.x, value.y, value.z);
 }
 
-void Shader::setUniformi(const char *name, const GLint &value) const{
-	glUniform1i(glGetUniformLocation(m_program, name), value);
+void Shader::setUniform4f(const std::string &name, const vec4 &value) const{
+	glUniform4f(m_uniforms.at(name), value.x, value.y, value.z, value.w);
 }
 
-void Shader::setUniformMat4f(const char *name, const GLfloat *value) const{
-	glUniformMatrix4fv(glGetUniformLocation(m_program, name), 1, GL_FALSE, value);
+void Shader::setUniformi(const std::string &name, const GLint &value) const{
+	glUniform1i(m_uniforms.at(name), value);
+}
+
+void Shader::setUniformMat4f(const std::string &name, const GLfloat *value) const{
+	glUniformMatrix4fv(m_uniforms.at(name), 1, GL_FALSE, value);
 }
 
 void Shader::updateUniforms(GLfloat *projectionMatrix, GLfloat *cameraMatrix, GLfloat *modelMatrix, Material &material){

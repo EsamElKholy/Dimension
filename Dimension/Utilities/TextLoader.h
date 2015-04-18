@@ -1,12 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <fstream>
 #include <string>
 
-class TextLoader
+struct TextLoader
 {
-public:
 	TextLoader(void);
 	~TextLoader(void);
 

@@ -13,9 +13,9 @@ public:
 
 	void bind(int index);
 	void unbind();
+	GLuint textureID;
 private:
 	unsigned char* image;
-	GLuint texture;
 private:
 	void bindTexture(unsigned char* image, int width, int height ,const bool &useLoader);
 };

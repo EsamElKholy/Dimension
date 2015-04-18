@@ -59,13 +59,13 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SOIL.lib;glfw3.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SOIL.lib;glfw3.lib;glew32s.lib;opengl32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -76,7 +76,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
@@ -84,21 +84,28 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SOIL.lib;glfw3.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SOIL.lib;glfw3.lib;glew32s.lib;opengl32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Graphics\Attenuation.cpp" />
     <ClCompile Include="Core\Core.cpp" />
     <ClCompile Include="Core\Input.cpp" />
     <ClCompile Include="Core\ScreenManager.cpp" />
     <ClCompile Include="Graphics\BaseLight.cpp" />
     <ClCompile Include="Graphics\BasicShader.cpp" />
+    <ClCompile Include="Graphics\BatchRenderer.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\DirectionalLight.cpp" />
     <ClCompile Include="Graphics\Material.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
     <ClCompile Include="Graphics\PhongShader.cpp" />
+    <ClCompile Include="Graphics\PointLight.cpp" />
+    <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
+    <ClCompile Include="Graphics\SimpleRenderer.cpp" />
+    <ClCompile Include="Graphics\SpotLight.cpp" />
+    <ClCompile Include="Graphics\Sprite2D.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Graphics\Transform.cpp" />
     <ClCompile Include="Math\mat4.cpp" />
@@ -106,6 +113,7 @@
     <ClCompile Include="Math\vec2.cpp" />
     <ClCompile Include="Math\vec3.cpp" />
     <ClCompile Include="Math\vec4.cpp" />
+    <ClCompile Include="Utilities\MeshLoader.cpp" />
     <ClCompile Include="Sandbox\Game.cpp" />
     <ClCompile Include="Sandbox\Ignition.cpp" />
     <ClCompile Include="Utilities\ImageLoader.cpp" />
@@ -113,17 +121,23 @@
     <ClCompile Include="Utilities\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Graphics\Attenuation.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\Input.h" />
     <ClInclude Include="Core\ScreenManager.h" />
     <ClInclude Include="Graphics\BaseLight.h" />
     <ClInclude Include="Graphics\BasicShader.h" />
+    <ClInclude Include="Graphics\BatchRenderer.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\DirectionalLight.h" />
     <ClInclude Include="Graphics\Material.h" />
     <ClInclude Include="Graphics\Mesh.h" />
     <ClInclude Include="Graphics\PhongShader.h" />
+    <ClInclude Include="Graphics\PointLight.h" />
     <ClInclude Include="Graphics\Shader.h" />
+    <ClInclude Include="Graphics\SimpleRenderer.h" />
+    <ClInclude Include="Graphics\SpotLight.h" />
+    <ClInclude Include="Graphics\Sprite2D.h" />
     <ClInclude Include="Graphics\Texture.h" />
     <ClInclude Include="Graphics\Transform.h" />
     <ClInclude Include="Graphics\Vertex.h" />
@@ -133,6 +147,8 @@
     <ClInclude Include="Math\vec2.h" />
     <ClInclude Include="Math\vec3.h" />
     <ClInclude Include="Math\vec4.h" />
+    <ClInclude Include="Graphics\Renderer.h" />
+    <ClInclude Include="Utilities\MeshLoader.h" />
     <ClInclude Include="Sandbox\Game.h" />
     <ClInclude Include="Utilities\ImageLoader.h" />
     <ClInclude Include="Utilities\TextLoader.h" />

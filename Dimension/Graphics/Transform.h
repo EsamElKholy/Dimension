@@ -23,7 +23,8 @@ public:
 	vec3 getScale() const;
 	vec3 getRotation() const;
 
-	void setCamera(Camera &cam);
+	static void setCamera(Camera &cam);
+	static Camera getCamera();
 
 	void setPerspective(const float &fov, const int &width, const int &height, const float &near, const float &far);
 	void setOrtho(const float &right, const float &left, const float &top, const float &bottom, const float &near, const float &far);
@@ -41,6 +42,6 @@ private:
 	float m_fov;
 	int m_width ,m_height;
 
-	Camera* m_cam;
+	static Camera* m_cam;
 };
 

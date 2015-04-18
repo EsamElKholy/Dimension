@@ -2,20 +2,24 @@
 
 #include <cmath>
 #include <iostream>
+#include "maths_func.h"
 
-struct vec3
+
+class vec3
 {
+public:
+	static const vec3 UP;
+	static const vec3 DOWN;
+	static const vec3 LEFT;
+	static const vec3 RIGHT;
+	static const vec3 FORWARD;
+	static const vec3 BACK;
+	static const vec3 ONE;
+	static const vec3 ZERO;
+
 	float x, y, z;
 
-	vec3(void);
-	vec3(float x, float y, float z);
-
-	vec3& add(const vec3 &other);
-	vec3& sub(const vec3 &other);
-	vec3& mul(const float &other);
-	vec3& mul(const vec3 &other);
-	vec3& div(const float &other);
-	vec3& div(const vec3 &other);
+	vec3(const float &x = 0.0f,const float &y = 0.0f,const float &z = 0.0f);
 
 	float getLength();
 	
@@ -24,26 +28,20 @@ struct vec3
 	vec3 cross(const vec3 &vec) const;
 	float dot(const vec3 &vec) const;
 
-	friend vec3 operator+(vec3 left, const vec3& right);
-	friend vec3 operator-(vec3 left, const vec3& right);
+	vec3 rotate(const float &angel, const vec3 &axis) const;
 
-	friend vec3 operator*(vec3 left, const vec3& right);
-	friend vec3 operator*(vec3 left, const float& right);
-
-	friend vec3 operator/(vec3 left, const vec3& right);
-	friend vec3 operator/(vec3 left, const float& right);
+	vec3 operator+(const vec3& right);
+	vec3 operator-(const vec3& right);
+	vec3 operator*(float right) const;
+	vec3 operator/(float right) const;
 
 	bool operator==(const vec3& other);
 	bool operator!=(const vec3& other);
 
 	vec3& operator+=(const vec3& other);
 	vec3& operator-=(const vec3& other);
-
-	vec3& operator*=(const vec3& other);
-	vec3& operator*=(const float& other);
-
-	vec3& operator/=(const vec3& other);
-	vec3& operator/=(const float& other);
+	vec3& operator*=(float other);
+	vec3& operator/=(float other);
 
 	friend std::ostream& operator<<(std::ostream& stream, const vec3& vector);
 };

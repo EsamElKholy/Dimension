@@ -5,6 +5,11 @@ Mesh::Mesh(void)
 {
 }
 
+Mesh::Mesh(Vertex *vertices, const GLuint &verSize, GLuint *indices, const GLuint &indSize, const bool &useNormals, const Material &material)
+{
+	m_material = material;	
+	addMeshData(vertices, verSize, indices, indSize, useNormals);
+}
 
 Mesh::~Mesh(void)
 {
@@ -12,9 +17,17 @@ Mesh::~Mesh(void)
 
 void Mesh::addMeshData(Vertex *vertices, const GLuint &verSize, GLuint *indices, const GLuint &indSize, const bool &useNormals){
 	m_indSize = indSize;
+	m_vertSize = verSize;
+
+	m_vertices = new Vertex[verSize];
 
 	if (useNormals){
 		calcNormals(vertices ,verSize ,indices ,indSize);
+	}
+
+	for (int i = 0; i < verSize; i++)
+	{
+		m_vertices[i] = vertices[i];
 	}
 
 	glGenBuffers(1, &m_VBO);
@@ -27,6 +40,7 @@ void Mesh::addMeshData(Vertex *vertices, const GLuint &verSize, GLuint *indices,
 
 	initEBO(indices, indSize);
 
+
 	glBindVertexArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -38,13 +52,15 @@ void Mesh::initVBO(Vertex *vertices, GLuint verSize){
 
 	glBufferData(GL_ARRAY_BUFFER ,verSize *sizeof(Vertex),vertices ,GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(vec3));
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(vec3) + sizeof(vec2)));
-
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
+	glEnableVertexAttribArray(3);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(vec3));
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(vec3) + sizeof(vec2)));
+	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(vec3) + sizeof(vec2) + sizeof(GLfloat)));
 }
 
 void Mesh::initEBO(GLuint *indices, GLuint indSize){
@@ -54,7 +70,7 @@ void Mesh::initEBO(GLuint *indices, GLuint indSize){
 }
 
 void Mesh::calcNormals(Vertex *vertices, GLuint vertSize, GLuint *indices, GLuint indSize){
-	for (int i = 0; i < m_indSize; i += 3)
+	for (unsigned int i = 0; i < m_indSize; i += 3)
 	{
 		int i0 = indices[i + 0];
 		int i1 = indices[i + 1];
@@ -71,14 +87,18 @@ void Mesh::calcNormals(Vertex *vertices, GLuint vertSize, GLuint *indices, GLuin
 		vertices[i2].m_normal = vertices[i2].m_normal + normal;
 	}
 
-	for (int i = 0; i < vertSize; i++)
+	for (unsigned int i = 0; i < vertSize; i++)
 	{
 		vertices[i].m_normal.normalize();
 	}
 }
 
-void Mesh::draw(){
-	glBindVertexArray(m_VAO);
-	glDrawElements(GL_TRIANGLES ,m_indSize ,GL_UNSIGNED_INT ,0);
+void Mesh::bind() const{
+	glBindVertexArray(m_VAO);	
+}
+
+void Mesh::unbind() const{
 	glBindVertexArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

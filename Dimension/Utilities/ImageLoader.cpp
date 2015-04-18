@@ -1,5 +1,5 @@
 #include "ImageLoader.h"
-
+#include <iostream>
 unsigned char *ImageLoader::m_image;
 
 ImageLoader::ImageLoader(void)
@@ -8,7 +8,7 @@ ImageLoader::ImageLoader(void)
 }
 
 void ImageLoader::loadImage(const char *path ,int width ,int height){
-	m_image = SOIL_load_image(path ,&width ,&height ,0 ,SOIL_LOAD_RGBA);
+	m_image = SOIL_load_image(path ,&width ,&height ,0 ,SOIL_LOAD_RGBA);	
 }
 
 void ImageLoader::dispose(){

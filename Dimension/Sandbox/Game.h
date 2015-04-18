@@ -1,5 +1,6 @@
 #pragma once
 
+#include "..\Graphics\Vertex.h"
 #include "..\Graphics\Mesh.h"
 #include "..\Graphics\Material.h"
 #include "..\Graphics\Transform.h"
@@ -7,9 +8,10 @@
 #include "..\Graphics\Shader.h"
 #include "..\Graphics\BasicShader.h"
 #include "..\Graphics\PhongShader.h"
-#include "..\Graphics\Vertex.h"
+#include "..\Graphics\SimpleRenderer.h"
 #include "..\Core\ScreenManager.h"
 #include "..\Utilities\Timer.h"
+#include "..\Graphics\Sprite2D.h"
 
 class Game
 {
@@ -24,9 +26,11 @@ public:
 
 private:
 	Transform tranform;
-	Material material;
 	Mesh mesh;
+	SimpleRenderer renderer;
 	Camera camera;
 	Shader *shader;
+	PointLight* pointLights;
+	SpotLight* spotLights;
 };
 

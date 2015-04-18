@@ -1,5 +1,43 @@
-﻿Build started 3/31/2015 10:25:27 PM.
+﻿Build started 4/18/2015 8:32:20 AM.
+     1>Project "C:\Users\Kai\Desktop\Project\Dimension\Dimension\Dimension.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D GLEW_STATIC /D _CRT_SECURE_NO_WARNINGS /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /D GLEW_STATIC /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Utilities\ImageLoader.cpp
+         ImageLoader.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Kai\Desktop\Project\Dimension\Debug\Dimension.exe" /INCREMENTAL /NOLOGO SOIL.lib glfw3.lib glew32s.lib opengl32.lib FreeImage.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Kai\Desktop\Project\Dimension\Debug\Dimension.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Kai\Desktop\Project\Dimension\Debug\Dimension.lib" /MACHINE:X86 Debug\Attenuation.obj
+         Debug\Core.obj
+         Debug\Input.obj
+         Debug\ScreenManager.obj
+         Debug\BaseLight.obj
+         Debug\BasicShader.obj
+         Debug\BatchRenderer.obj
+         Debug\Camera.obj
+         Debug\DirectionalLight.obj
+         Debug\Material.obj
+         Debug\Mesh.obj
+         Debug\PhongShader.obj
+         Debug\PointLight.obj
+         Debug\Renderer.obj
+         Debug\Shader.obj
+         Debug\SimpleRenderer.obj
+         Debug\SpotLight.obj
+         Debug\Sprite2D.obj
+         Debug\Texture.obj
+         Debug\Transform.obj
+         Debug\mat4.obj
+         Debug\Quaternion.obj
+         Debug\vec2.obj
+         Debug\vec3.obj
+         Debug\vec4.obj
+         Debug\MeshLoader.obj
+         Debug\Game.obj
+         Debug\Ignition.obj
+         Debug\ImageLoader.obj
+         Debug\TextLoader.obj
+         Debug\Timer.obj
+         Dimension.vcxproj -> C:\Users\Kai\Desktop\Project\Dimension\Debug\Dimension.exe
+     1>Done Building Project "C:\Users\Kai\Desktop\Project\Dimension\Dimension\Dimension.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.06
+Time Elapsed 00:00:00.63

@@ -10,22 +10,22 @@ TextLoader::~TextLoader(void)
 }
 
 std::string TextLoader::getData(const char* path) {
-	std::string content;
+	FILE* file = fopen(path, "rt");
 
-	std::ifstream file(path, std::ios::in);
+	fseek(file, 0, SEEK_END);	
+	unsigned long length = ftell(file);
 
-	if(!file.is_open()){
-		std::cout<<"Failed to open file\n";
-	}
+	char* data = new char[length + 1];
+	memset(data, 0, length + 1);
 
-	std::string line = "";
+	fseek(file, 0, SEEK_SET);
+	fread(data, 1, length, file);
 
-	while(!file.eof()){
-		std::getline(file, line);
-		content.append(line + "\n");
-	}
+	fclose(file);
 
-	file.close();
-	
+	std::string content(data);
+
+	delete[] data;
+
 	return content;
 }

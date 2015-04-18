@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SOIL\SOIL.h>
+#include <FreeImage\FreeImage.h>
 
 class ImageLoader
 {

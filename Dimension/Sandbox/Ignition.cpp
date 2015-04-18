@@ -2,9 +2,8 @@
 
 
 int main(){
-	Core engine = Core(800, 600, "test");
+	Core engine = Core(960, 540, "test");
 	engine.start();
 
-	std::cout << "here\n";
 	return 0;
 }

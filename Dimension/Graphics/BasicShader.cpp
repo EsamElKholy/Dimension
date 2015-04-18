@@ -8,10 +8,10 @@ BasicShader::BasicShader(){
 
 		compileShader();
 
-		whiteTexture[0] = 0.0f;
-		whiteTexture[1] = 0.0f;
-		whiteTexture[2] = 0.0f;
-		whiteTexture[3] = 0.0f;
+		whiteTexture[0] = 0;
+		whiteTexture[1] = 0;
+		whiteTexture[2] = 0;
+		whiteTexture[3] = 0;
 
 		emptyTexture = Texture(whiteTexture, 1, 1);
 	}

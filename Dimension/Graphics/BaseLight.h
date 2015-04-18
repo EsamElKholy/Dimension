@@ -2,20 +2,12 @@
 
 #include "..\Math\vec4.h"
 
-class BaseLight
+struct BaseLight
 {
-public:
-	BaseLight();
-	BaseLight(const vec4 &color, const float &intensity);
+	BaseLight(const vec4 &color = vec4(0.0f ,0.0f ,0.0f ,0.0f), const float &intensity = 0.0f);
 	~BaseLight();
 
-	void setColor(const vec4 &color);
-	void setIntensity(const float &intensity);
-
-	vec4 getColor() const;
-	float getIntensity() const;
-private:
-	vec4 m_color;
-	float m_intensity;
+	vec4 color;
+	float intensity;
 };
 

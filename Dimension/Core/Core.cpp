@@ -34,8 +34,8 @@ void Core::run(){
 		double currentTime = Timer::getTime();
 		delta += (currentTime - lastTime) * UPS;
 
-		if((currentTime - lastTime) != 0)
-			Timer::setDelta((float)(currentTime - lastTime));
+		//if((currentTime - lastTime) != 0)
+			Timer::setDelta(0.001f);
 
 		lastTime = currentTime;
 			

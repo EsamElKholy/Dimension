@@ -1,5 +1,7 @@
 #include "Transform.h"
 
+Camera* Transform::m_cam;
+
 Transform::Transform(void)
 {
 	m_translation = vec3(0.0f, 0, 0);
@@ -37,8 +39,14 @@ void Transform::setRotation(const float &x ,const float &y ,const float &z){
 	m_rotation = vec3(x, y, z);
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void Transform::setCamera(Camera &cam){
 	m_cam = &cam;
+}
+
+Camera Transform::getCamera(){
+	return *m_cam;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,7 +75,7 @@ mat4 Transform::projectionMatrix(const int &mode){
 	if(mode == 1){
 		projectionMat = mat4::orthographic(m_right, m_left, m_top, m_bottom, m_near, m_far);
 	}else if(mode == 2){
-		projectionMat = mat4::perspective(m_fov, m_width, m_height, m_near, m_far);
+		projectionMat = mat4::perspective(m_fov,(float) m_width,(float) m_height, m_near, m_far);
 	}
 
 	return projectionMat * cameraMatrix() * modelToWorld();

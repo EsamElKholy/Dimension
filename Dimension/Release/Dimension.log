@@ -1,0 +1,39 @@
+﻿Build started 4/10/2015 5:28:55 PM.
+     1>Project "C:\Users\Kai\Desktop\Project\Dimension\Dimension\Dimension.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /D GLEW_STATIC /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Core\Core.cpp Graphics\BasicShader.cpp Graphics\Material.cpp Graphics\PhongShader.cpp Graphics\Shader.cpp Sandbox\Game.cpp Sandbox\Ignition.cpp
+         Core.cpp
+     1>c:\users\kai\desktop\project\dimension\dimension\core\ScreenManager.h(3): warning C4005: 'GLEW_STATIC' : macro redefinition
+                 command-line arguments :  see previous definition of 'GLEW_STATIC'
+     1>c:\users\kai\desktop\project\dimension\dimension\math\maths_func.h(8): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+         BasicShader.cpp
+     1>Graphics\BasicShader.cpp(11): warning C4244: '=' : conversion from 'float' to 'unsigned char', possible loss of data
+     1>Graphics\BasicShader.cpp(12): warning C4244: '=' : conversion from 'float' to 'unsigned char', possible loss of data
+     1>Graphics\BasicShader.cpp(13): warning C4244: '=' : conversion from 'float' to 'unsigned char', possible loss of data
+     1>Graphics\BasicShader.cpp(14): warning C4244: '=' : conversion from 'float' to 'unsigned char', possible loss of data
+         Material.cpp
+     1>Graphics\Material.cpp(13): error C2572: 'Material::Material' : redefinition of default parameter : parameter 4
+                 c:\users\kai\desktop\project\dimension\dimension\graphics\Material.h(10) : see declaration of 'Material::Material'
+     1>Graphics\Material.cpp(13): error C2572: 'Material::Material' : redefinition of default parameter : parameter 3
+                 c:\users\kai\desktop\project\dimension\dimension\graphics\Material.h(10) : see declaration of 'Material::Material'
+         PhongShader.cpp
+     1>Graphics\PhongShader.cpp(13): warning C4244: '=' : conversion from 'float' to 'unsigned char', possible loss of data
+     1>Graphics\PhongShader.cpp(14): warning C4244: '=' : conversion from 'float' to 'unsigned char', possible loss of data
+     1>Graphics\PhongShader.cpp(15): warning C4244: '=' : conversion from 'float' to 'unsigned char', possible loss of data
+     1>Graphics\PhongShader.cpp(16): warning C4244: '=' : conversion from 'float' to 'unsigned char', possible loss of data
+         Shader.cpp
+     1>Graphics\Shader.cpp(59): warning C4018: '<' : signed/unsigned mismatch
+         Game.cpp
+     1>c:\users\kai\desktop\project\dimension\dimension\math\maths_func.h(8): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+     1>c:\users\kai\desktop\project\dimension\dimension\sandbox\..\Core\ScreenManager.h(3): warning C4005: 'GLEW_STATIC' : macro redefinition
+                 command-line arguments :  see previous definition of 'GLEW_STATIC'
+     1>Sandbox\Game.cpp(90): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         Ignition.cpp
+     1>c:\users\kai\desktop\project\dimension\dimension\core\ScreenManager.h(3): warning C4005: 'GLEW_STATIC' : macro redefinition
+                 command-line arguments :  see previous definition of 'GLEW_STATIC'
+     1>c:\users\kai\desktop\project\dimension\dimension\math\maths_func.h(8): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+     1>Done Building Project "C:\Users\Kai\Desktop\Project\Dimension\Dimension\Dimension.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:01.85

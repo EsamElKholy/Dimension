@@ -5,20 +5,24 @@ Texture::Texture(void)
 }
 
 Texture::Texture(char* data, const int &width, const int &height){
-	ImageLoader::loadImage(data, width, height);
-	image = ImageLoader::getImage();
-	bindTexture(image, width, height ,true);
+	if (glewInit() == GLEW_OK){
+		ImageLoader::loadImage(data, width, height);
+		image = ImageLoader::getImage();
+		bindTexture(image, width, height, true);
+	}
 }
 
 Texture::Texture(unsigned char *data, const int &width, const int &height){
-	image = (unsigned char*)data;
-	bindTexture(image, width, height, false);
+	if (glewInit() == GLEW_OK){
+		image = data;
+		bindTexture(image, width, height, false);
+	}
 }
 
 void Texture::bindTexture(unsigned char* image, int width, int height, const bool &useLoader){
-	glGenTextures(1 ,&texture);
+	glGenTextures(1, &textureID);
 
-	glBindTexture(GL_TEXTURE_2D ,texture);
+	glBindTexture(GL_TEXTURE_2D, textureID);
 
 	glTexParameteri(GL_TEXTURE_2D ,GL_TEXTURE_WRAP_S ,GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D ,GL_TEXTURE_WRAP_T ,GL_REPEAT);
@@ -37,7 +41,7 @@ void Texture::bindTexture(unsigned char* image, int width, int height, const boo
 
 void Texture::bind(int index){
 	glActiveTexture(GL_TEXTURE0 + index);	
-	glBindTexture(GL_TEXTURE_2D ,texture);
+	glBindTexture(GL_TEXTURE_2D, textureID);
 }
 
 void Texture::unbind(){

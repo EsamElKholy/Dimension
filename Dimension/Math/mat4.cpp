@@ -28,6 +28,8 @@ mat4 mat4::identity()
 
 mat4& mat4::multiply(const mat4& other)
 {
+	float data[16];
+
 	for (int y = 0; y < 4; y++)
 	{
 		for (int x = 0; x < 4; x++)
@@ -37,9 +39,11 @@ mat4& mat4::multiply(const mat4& other)
 			{
 				sum += elements[x + e * 4] * other.elements[e + y * 4];
 			}
-			elements[x + y * 4] = sum;
+			data[x + y * 4] = sum;
 		}
 	}
+
+	memcpy(elements, data, 16 * sizeof(float));
 
 	return *this;
 }
@@ -82,7 +86,7 @@ mat4 mat4::perspective(const float &fov, const float &width, const float &height
 	float q = 1.0f / tan(toRadians(0.5f * fov));
 	float a = q / aspectRatio;
 
-	float b = (near + far) / (near - far);
+	float b = (-near - far) / (near - far);
 	float c = (2.0f * near * far) / (near - far);
 
 	result.elements[0 + 0 * 4] = a;
@@ -106,10 +110,10 @@ mat4 mat4::camera(const vec3 &forward, const vec3 &up){
 
 	vec3 u = f.cross(r);
 
-	result.elements[0] = r.x;		result.elements[1] = r.y;		result.elements[2] = r.z;		result.elements[3] = 0;
-	result.elements[4] = u.x;		result.elements[5] = u.y;		result.elements[6] = u.z;		result.elements[7] = 0;
-	result.elements[8] = f.x;		result.elements[9] = f.y;		result.elements[10] = f.z;		result.elements[11] = 0;
-	result.elements[12] = 0;		result.elements[13] = 0;		result.elements[14] = 0;		result.elements[15] = 1;
+	result.elements[0] = r.x;		result.elements[4] = r.y;		result.elements[8] = r.z;		result.elements[12] = 0;
+	result.elements[1] = u.x;		result.elements[5] = u.y;		result.elements[9] = u.z;		result.elements[13] = 0;
+	result.elements[2] = f.x;		result.elements[6] = f.y;		result.elements[10] = f.z;		result.elements[14] = 0;
+	result.elements[3] = 0;			result.elements[7] = 0;			result.elements[11] = 0;		result.elements[15] = 1;
 
 	return result;
 }																	
@@ -137,20 +141,20 @@ mat4 mat4::rotation(const vec3 &angle)
 	float y = toRadians(angle.y);
 	float z = toRadians(angle.z);
 
-	rx.elements[0] = 1.0f;			rx.elements[1] = 0.0f;			rx.elements[2] = 0.0f;			rx.elements[3] = 0.0f;
-	rx.elements[4] = 0.0f;			rx.elements[5] = cosf(x);		rx.elements[6] = -sinf(x);		rx.elements[7] = 0.0f;
-	rx.elements[8] = 0.0f;			rx.elements[9] = sinf(x);		rx.elements[10] = cosf(x);		rx.elements[11] = 0.0f;
-	rx.elements[12] = 0.0f;			rx.elements[13] = 0.0f;			rx.elements[14] = 0.0f;			rx.elements[15] = 1.0f;
+	rx.elements[0] = 1.0f;			rx.elements[4] = 0.0f;			rx.elements[8] = 0.0f;			rx.elements[12] = 0.0f;
+	rx.elements[1] = 0.0f;			rx.elements[5] = cosf(x);		rx.elements[9] = -sinf(x);		rx.elements[13] = 0.0f;
+	rx.elements[2] = 0.0f;			rx.elements[6] = sinf(x);		rx.elements[10] = cosf(x);		rx.elements[14] = 0.0f;
+	rx.elements[3] = 0.0f;			rx.elements[7] = 0.0f;			rx.elements[11] = 0.0f;			rx.elements[15] = 1.0f;
 
-	ry.elements[0] = cosf(y);		ry.elements[1] = 0.0f;			ry.elements[2] = sinf(y);		ry.elements[3] = 0.0f;
-	ry.elements[4] = 0.0f;			ry.elements[5] = 1.0f;			ry.elements[6] = 0.0f;			ry.elements[7] = 0.0f;
-	ry.elements[8] = -sinf(y);		ry.elements[9] = 0.0f;			ry.elements[10] = cosf(y);		ry.elements[11] = 0.0f;
-	ry.elements[12] = 0.0f;			ry.elements[13] = 0.0f;			ry.elements[14] = 0.0f;			ry.elements[15] = 1.0f;
+	ry.elements[0] = cosf(y);		ry.elements[4] = 0.0f;			ry.elements[8] = sinf(y);		ry.elements[12] = 0.0f;
+	ry.elements[1] = 0.0f;			ry.elements[5] = 1.0f;			ry.elements[9] = 0.0f;			ry.elements[13] = 0.0f;
+	ry.elements[2] = -sinf(y);		ry.elements[6] = 0.0f;			ry.elements[10] = cosf(y);		ry.elements[14] = 0.0f;
+	ry.elements[3] = 0.0f;			ry.elements[7] = 0.0f;			ry.elements[11] = 0.0f;			ry.elements[15] = 1.0f;
 
-	rz.elements[0] = cosf(z);		rz.elements[1] = -sinf(z);		rz.elements[2] = 0.0f;			rz.elements[3] = 0.0f;
-	rz.elements[4] = sinf(z);		rz.elements[5] = cosf(z);		rz.elements[6] = 0.0f;			rz.elements[7] = 0.0f;
-	rz.elements[8] = 0.0f;			rz.elements[9] = 0.0f;			rz.elements[10] = 1.0f;			rz.elements[11] = 0.0f;
-	rz.elements[12] = 0.0f;			rz.elements[13] = 0.0f;			rz.elements[14] = 0.0f;			rz.elements[15] = 1.0f;
+	rz.elements[0] = cosf(z);		rz.elements[4] = -sinf(z);		rz.elements[8] = 0.0f;			rz.elements[12] = 0.0f;
+	rz.elements[1] = sinf(z);		rz.elements[5] = cosf(z);		rz.elements[9] = 0.0f;			rz.elements[13] = 0.0f;
+	rz.elements[2] = 0.0f;			rz.elements[6] = 0.0f;			rz.elements[10] = 1.0f;			rz.elements[14] = 0.0f;
+	rz.elements[3] = 0.0f;			rz.elements[7] = 0.0f;			rz.elements[11] = 0.0f;			rz.elements[15] = 1.0f;
 
 	return rz * ry * rx;
 }
