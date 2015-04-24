@@ -102,3 +102,9 @@ void Mesh::unbind() const{
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
+
+void Mesh::draw(){
+	bind();
+	glDrawElements(GL_TRIANGLES, m_indSize, GL_UNSIGNED_INT, 0);
+	unbind();
+}

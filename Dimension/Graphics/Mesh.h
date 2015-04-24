@@ -19,6 +19,8 @@ public:
 	void bind() const;
 	void unbind() const;
 
+	void draw();
+
 	Vertex *m_vertices;
 	Material m_material;
 	GLuint m_indSize;

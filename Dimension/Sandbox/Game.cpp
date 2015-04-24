@@ -43,7 +43,7 @@ void Game::init(){
 		2, 1, 3
 	};	
 
-	mesh = Mesh(vertices, ARRAY_SIZE(vertices), indices, ARRAY_SIZE(indices), true, Material(Texture("Resources\\Textures\\test2.png", 16, 16), vec4(1.0f, 1.0f, 1.0f, 1.0f)));
+	mesh = Mesh(vertices, ARRAY_SIZE(vertices), indices, ARRAY_SIZE(indices), true, Material(Texture("Resources\\Textures\\test.png", 512, 512), vec4(1.0f, 1.0f, 1.0f, 1.0f)));
 	s1 = Sprite2D(vec3(0, 0, 0), vec2(1, 1), mesh.m_material);
 
 	/////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ void Game::init(){
 	/////////////////////////////////////////////////////////////////////////////////////
 	shader = PhongShader::getInstacne();
 	PhongShader::setAmbientLight(vec4(0.4f, 0.4f, 0.4f, 1.0f));
-	//PhongShader::setDirecionalLight(DirectionalLight(BaseLight(vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.3f), vec3(1.0f ,1.0f ,1.0f)));
+	PhongShader::setDirecionalLight(DirectionalLight(BaseLight(vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.3f), vec3(1.0f ,1.0f ,1.0f)));
 
 	pointLights = new PointLight[2];
 
@@ -105,14 +105,15 @@ void Game::render(){
 	/*shader->updateUniforms(tranform.projectionMatrix(PERSPECTIVE).elements, tranform.cameraMatrix().elements, tranform.modelToWorld().elements, mesh.m_material);
 	renderer.submit(&mesh);
 	renderer.render();*/
-	shader->updateUniforms(tranform.projectionMatrix(PERSPECTIVE).elements, tranform.cameraMatrix().elements, tranform.modelToWorld().elements, mesh.m_material);
 	renderer.submit(&s1);
 	renderer.render();
+	shader->updateUniforms(tranform.projectionMatrix(PERSPECTIVE).elements, tranform.cameraMatrix().elements, tranform.modelToWorld().elements, mesh.m_material);
+	mesh.draw();
 	//b1.begin();
-	////b1.submit(&mesh);
-	//shader->updateUniforms(tranform.projectionMatrix(PERSPECTIVE).elements, tranform.cameraMatrix().elements, tranform.modelToWorld().elements, s1.m_material);
+	//b1.submit(&mesh);
+	////shader->updateUniforms(tranform.projectionMatrix(PERSPECTIVE).elements, tranform.cameraMatrix().elements, tranform.modelToWorld().elements, s1.m_material);
 	//b1.submit(&s1); 
 	//b1.end();
 
-	//b1.render();	
+	b1.render();	
 }
