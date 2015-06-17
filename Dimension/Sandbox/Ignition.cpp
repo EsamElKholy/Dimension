@@ -2,7 +2,7 @@
 
 
 int main(){
-	Core engine = Core(960, 540, "test");
+	Core engine = Core(1366, 768, "Dimension" ,60 ,TestGame());
 	engine.start();
 
 	return 0;

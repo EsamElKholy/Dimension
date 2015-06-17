@@ -5,7 +5,7 @@
 #include <iostream>
 #include <GLFW\glfw3.h>
 #include "Input.h"
-	
+#include "..\Audio\SoundManager.h"
 
 class ScreenManager
 {
@@ -16,10 +16,9 @@ public:
 
 	bool init();
 
-	static int getWidth();
-	static int getHeight();
+	inline static int getWidth(){ return m_Width; }
+	inline static int getHeight(){ return m_Height; }
 
-	void clear() const;
 	void update() const;
 	void render() const;
 	void dispose() const;
@@ -28,7 +27,7 @@ public:
 private:
 	static int m_Width ,m_Height;
 	char *m_Title;
-
+	
 	Input input;
 	GLFWwindow *window;
 

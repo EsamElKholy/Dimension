@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\Utilities\ImageLoader.h"
+#include "..\Core\Utilities\ImageLoader.h"
 
 #include <GL\glew.h>
 
@@ -8,15 +8,16 @@ class Texture
 {
 public:
 	Texture(void);
-	Texture(char *data ,const int &width ,const int &height);
-	Texture(unsigned char *data, const int &width, const int &height);
+	Texture(char *data);
 
 	void bind(int index);
 	void unbind();
-	GLuint textureID;
+
+	inline GLuint getTextureID() const { return textureID; }
 private:
 	unsigned char* image;
 private:
-	void bindTexture(unsigned char* image, int width, int height ,const bool &useLoader);
+	GLuint textureID;
+	void bindTexture(unsigned char* image, int width, int height);
 };
 

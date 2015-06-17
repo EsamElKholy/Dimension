@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Camera.h"
-#include "..\Math\mat4.h"
+#include "..\Core\Math\MathLibs.h"
 
 #define ORTHO 1
 #define PERSPECTIVE 2
@@ -9,39 +8,50 @@
 class Transform
 {
 public:
-	Transform(void);
-	Transform(const vec3 &translation, const vec3 &rotation, const vec3 &scale);
+	Transform(const vec3 &p = vec3(0, 0, 0), const vec3 &s = vec3(1, 1, 1), const Quaternion &r = Quaternion(0 ,0 ,0 ,1));
 	~Transform(void);
 
-	void setModelTransform(const vec3 &translation, const vec3 &rotation, const vec3 &scale);
+	mat4 modelMatrix();
 
-	void setTranslation(const float &x ,const float &y ,const float &z);
-	void setScale(const float &x ,const float &y ,const float &z);
-	void setRotation(const float &x ,const float &y ,const float &z);
+	void update();
+	bool hasChanged();
 
-	vec3 getTranslation() const;
-	vec3 getScale() const;
-	vec3 getRotation() const;
+	void rotate(const float &angel, const vec3 &axis);
+	void rotate(Quaternion &rotation);
 
-	static void setCamera(Camera &cam);
-	static Camera getCamera();
+	inline vec3& getPos(){ return m_pos; }
+	inline vec3& getScale(){ return m_scale; }
+	inline Quaternion& getRotation(){ return m_rotation; }	
 
-	void setPerspective(const float &fov, const int &width, const int &height, const float &near, const float &far);
-	void setOrtho(const float &right, const float &left, const float &top, const float &bottom, const float &near, const float &far);
+	inline vec3 getTransformedPos() { return getParentMatrix().transform(m_pos); }
+	
+	inline Quaternion getTransformedRot() const{
+		Quaternion parentRot(0 ,0 ,0 ,1);
 
-	mat4 modelToWorld();
-	mat4 cameraMatrix();
-	mat4 projectionMatrix(const int &mode);
+		if (m_parent)
+			parentRot = m_parent->getTransformedRot();
+
+		return parentRot * m_rotation;
+	}
+
+	inline void setPos(const vec3 &p){ m_pos = p; }
+	inline void setScale(const vec3 &s){ m_scale = s; }
+	inline void setRotation(const Quaternion &r){ m_rotation = r; }
+	inline void setParent(Transform *parent){ m_parent = parent; }
+
 private:
-	vec3 m_translation;
+	mat4 getParentMatrix();
+private:
+	vec3 m_pos;
 	vec3 m_scale;
-	vec3 m_rotation;
+	Quaternion m_rotation;
 
-	float m_right ,m_left ,m_top ,m_bottom;
-	float m_near ,m_far;
-	float m_fov;
-	int m_width ,m_height;
+	vec3 oldPos = 0;
+	vec3 oldScale = 0;
+	Quaternion oldRotation = 0;
 
-	static Camera* m_cam;
+	mat4 parentMatrix;
+
+	Transform *m_parent;
 };
 

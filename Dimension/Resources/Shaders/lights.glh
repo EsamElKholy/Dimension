@@ -1,0 +1,94 @@
+uniform vec3 C_eyePos;
+uniform float specularPower;
+uniform float specularIntensity;
+
+
+struct BaseLight{
+	vec4 color;
+	float intensity;
+};
+
+struct DirectionalLight{
+	BaseLight base;
+	vec3 direction;
+};
+
+struct Attenuation{
+	float constant;
+	float linear;
+	float exponent;
+};
+
+struct PointLight{
+	BaseLight base;
+	Attenuation atten;
+	vec3 position;
+	float range;
+};
+
+struct SpotLight{
+	PointLight pointLight;
+	vec3 direction;
+	float cutoff;
+};
+
+vec4 calcLight(BaseLight base ,vec3 direction ,vec3 normal ,vec3 worldPos){
+	float incidenceAngle = dot(normal ,-direction);
+
+	vec4 diffuseColor = vec4(0 ,0 ,0 ,1);
+	vec4 specularColor = vec4(0 ,0 ,0 ,1);
+
+	if(incidenceAngle > 0){
+		diffuseColor = base.color * incidenceAngle * base.intensity;
+
+		vec3 specularDirection = normalize(C_eyePos - worldPos);
+		vec3 reflectionDirection = normalize(reflect(direction ,normal));
+
+		float specularFactor = dot(specularDirection ,reflectionDirection);
+		specularFactor = pow(specularFactor ,specularPower);
+
+		if(specularFactor > 0 ){
+			specularColor = base.color * specularFactor * specularIntensity;
+		}
+	}
+
+	return diffuseColor + specularColor;
+}
+
+vec4 calcDirectionalLight(DirectionalLight directional ,vec3 normal ,vec3 worldPos){
+	return calcLight(directional.base ,-directional.direction ,normal ,worldPos);
+}
+
+vec4 calcPointLight(PointLight pointLight ,vec3 normal ,vec3 worldPos){
+	vec3 lightDirection = worldPos - pointLight.position;
+	float distanceToPoint = length(lightDirection);
+
+	if(distanceToPoint > pointLight.range){
+		return vec4(0 ,0 ,0 ,0);
+	}
+
+	lightDirection = normalize(lightDirection);
+
+	vec4 light = calcLight(pointLight.base ,lightDirection ,normal ,worldPos);
+
+	float attenuation = pointLight.atten.constant +
+						pointLight.atten.linear * distanceToPoint +
+						pointLight.atten.exponent * distanceToPoint * distanceToPoint +
+						0.0001;
+
+	return light / attenuation;
+}
+
+vec4 calcSpotLight(SpotLight spotLight ,vec3 normal ,vec3 worldPos){
+	vec3 lightDirection = normalize(worldPos - spotLight.pointLight.position);
+	float spotFactor = dot(lightDirection ,spotLight.direction);
+
+	vec4 light = vec4(0 ,0 ,0 ,0);
+
+	if(spotFactor > spotLight.cutoff){
+		light = calcPointLight(spotLight.pointLight ,normal ,worldPos) * 
+				(1.0 - ((1.0 - spotFactor) / (1.0 - spotLight.cutoff)));
+	}
+
+	return light;
+}

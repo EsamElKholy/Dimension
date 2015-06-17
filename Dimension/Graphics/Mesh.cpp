@@ -5,9 +5,9 @@ Mesh::Mesh(void)
 {
 }
 
-Mesh::Mesh(Vertex *vertices, const GLuint &verSize, GLuint *indices, const GLuint &indSize, const bool &useNormals, const Material &material)
+Mesh::Mesh(Vertex *vertices, const GLuint &verSize, GLuint *indices, const GLuint &indSize, const bool &useNormals)//, const Material &material)
 {
-	m_material = material;	
+	//m_material = material;	
 	addMeshData(vertices, verSize, indices, indSize, useNormals);
 }
 
@@ -30,11 +30,12 @@ void Mesh::addMeshData(Vertex *vertices, const GLuint &verSize, GLuint *indices,
 		m_vertices[i] = vertices[i];
 	}
 
+	//resource.init();
 	glGenBuffers(1, &m_VBO);
 	glGenBuffers(1, &m_EBO);
-
 	glGenVertexArrays(1, &m_VAO);
-	glBindVertexArray(m_VAO);
+
+	glBindVertexArray(m_VAO);//resource.getVAO());
 
 	initVBO(vertices, verSize);
 
@@ -48,23 +49,23 @@ void Mesh::addMeshData(Vertex *vertices, const GLuint &verSize, GLuint *indices,
 }
 
 void Mesh::initVBO(Vertex *vertices, GLuint verSize){
-	glBindBuffer(GL_ARRAY_BUFFER ,m_VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);//resource.getVBO());
 
 	glBufferData(GL_ARRAY_BUFFER ,verSize *sizeof(Vertex),vertices ,GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
-	glEnableVertexAttribArray(3);
+	//glEnableVertexAttribArray(3);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)0);
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)sizeof(vec3));
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(vec3) + sizeof(vec2)));
-	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(vec3) + sizeof(vec2) + sizeof(GLfloat)));
+	//glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)(sizeof(vec3) + sizeof(vec2) + sizeof(GLfloat)));
 }
 
 void Mesh::initEBO(GLuint *indices, GLuint indSize){
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER ,m_EBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);//resource.getEBO());
 
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER ,indSize * sizeof(GLuint) ,indices ,GL_STATIC_DRAW);
 }
@@ -93,8 +94,8 @@ void Mesh::calcNormals(Vertex *vertices, GLuint vertSize, GLuint *indices, GLuin
 	}
 }
 
-void Mesh::bind() const{
-	glBindVertexArray(m_VAO);	
+void Mesh::bind(){
+	glBindVertexArray(m_VAO);//resource.getVAO());
 }
 
 void Mesh::unbind() const{

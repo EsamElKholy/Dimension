@@ -41,17 +41,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)3rd party libraries\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)3rd party libraries\include\freetype\;$(SolutionDir)3rd party libraries\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)3rd party libraries\lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)3rd party libraries\include\;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)3rd party libraries\lib\;$(LibraryPath)</LibraryPath>
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediate\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -59,14 +59,22 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;GLEW_STATIC;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;_LIB;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <FloatingPointModel>Precise</FloatingPointModel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SOIL.lib;glfw3.lib;glew32s.lib;opengl32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SOIL.lib;glfw3.lib;glew32s.lib;opengl32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /E "$(ProjectDir)Resources" "$(SolutionDir)bin\$(Configuration)\Resources\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -76,96 +84,158 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions);GLEW_STATIC</PreprocessorDefinitions>
-      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;GLEW_STATIC;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>false</SDLCheck>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FloatingPointModel>Fast</FloatingPointModel>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SOIL.lib;glfw3.lib;glew32s.lib;opengl32.lib;FreeImage.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SOIL.lib;glfw3.lib;glew32s.lib;opengl32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /E "$(ProjectDir)Resources" "$(SolutionDir)bin\$(Configuration)\Resources\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Graphics\Attenuation.cpp" />
+    <ClCompile Include="AI Stuff\AStar.cpp" />
+    <ClCompile Include="AI Stuff\SearchProblem.cpp" />
+    <ClCompile Include="Audio\Sound.cpp" />
+    <ClCompile Include="Audio\SoundManager.cpp" />
+    <ClCompile Include="Core\GameObject.cpp" />
+    <ClCompile Include="Graphics\CubeMap.cpp" />
+    <ClCompile Include="Graphics\ResourceManagement\MeshResources.cpp" />
+    <ClCompile Include="Graphics\Shapes\Cube.cpp" />
     <ClCompile Include="Core\Core.cpp" />
     <ClCompile Include="Core\Input.cpp" />
     <ClCompile Include="Core\ScreenManager.cpp" />
-    <ClCompile Include="Graphics\BaseLight.cpp" />
-    <ClCompile Include="Graphics\BasicShader.cpp" />
-    <ClCompile Include="Graphics\BatchRenderer.cpp" />
-    <ClCompile Include="Graphics\Camera.cpp" />
-    <ClCompile Include="Graphics\DirectionalLight.cpp" />
+    <ClCompile Include="Components\Camera.cpp" />
     <ClCompile Include="Graphics\Material.cpp" />
     <ClCompile Include="Graphics\Mesh.cpp" />
-    <ClCompile Include="Graphics\PhongShader.cpp" />
-    <ClCompile Include="Graphics\PointLight.cpp" />
-    <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\Shader.cpp" />
-    <ClCompile Include="Graphics\SimpleRenderer.cpp" />
-    <ClCompile Include="Graphics\SpotLight.cpp" />
-    <ClCompile Include="Graphics\Sprite2D.cpp" />
+    <ClCompile Include="Graphics\Shapes\PlayerCube.cpp" />
+    <ClCompile Include="Graphics\Shapes\SkyBox.cpp" />
     <ClCompile Include="Graphics\Texture.cpp" />
     <ClCompile Include="Graphics\Transform.cpp" />
-    <ClCompile Include="Math\mat4.cpp" />
-    <ClCompile Include="Math\Quaternion.cpp" />
-    <ClCompile Include="Math\vec2.cpp" />
-    <ClCompile Include="Math\vec3.cpp" />
-    <ClCompile Include="Math\vec4.cpp" />
-    <ClCompile Include="Utilities\MeshLoader.cpp" />
-    <ClCompile Include="Sandbox\Game.cpp" />
+    <ClCompile Include="Core\Math\mat4.cpp" />
+    <ClCompile Include="Core\Math\Quaternion.cpp" />
+    <ClCompile Include="Core\Math\vec2.cpp" />
+    <ClCompile Include="Core\Math\vec3.cpp" />
+    <ClCompile Include="Core\Math\vec4.cpp" />
+    <ClCompile Include="Graphics\RenderingEngine.cpp" />
+    <ClCompile Include="Components\Light.cpp" />
+    <ClCompile Include="Sandbox\Bitmap.cpp" />
+    <ClCompile Include="Sandbox\Level.cpp" />
+    <ClCompile Include="Sandbox\Player.cpp" />
+    <ClCompile Include="Sandbox\TestGame.cpp" />
+    <ClCompile Include="Core\Utilities\MeshLoader.cpp" />
     <ClCompile Include="Sandbox\Ignition.cpp" />
-    <ClCompile Include="Utilities\ImageLoader.cpp" />
-    <ClCompile Include="Utilities\TextLoader.cpp" />
-    <ClCompile Include="Utilities\Timer.cpp" />
+    <ClCompile Include="Core\Utilities\ImageLoader.cpp" />
+    <ClCompile Include="Core\Utilities\TextLoader.cpp" />
+    <ClCompile Include="Core\Utilities\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Graphics\Attenuation.h" />
+    <ClInclude Include="AI Stuff\AStar.h" />
+    <ClInclude Include="AI Stuff\Brain.h" />
+    <ClInclude Include="AI Stuff\Data.h" />
+    <ClInclude Include="AI Stuff\SearchProblem.h" />
+    <ClInclude Include="AI Stuff\State.h" />
+    <ClInclude Include="Audio\Sound.h" />
+    <ClInclude Include="Audio\SoundManager.h" />
+    <ClInclude Include="Components\AgentMove.h" />
+    <ClInclude Include="Components\FreeLook.h" />
+    <ClInclude Include="Components\FreeMove.h" />
+    <ClInclude Include="Components\FreeMove_Custom.h" />
+    <ClInclude Include="Components\GameComponent.h" />
+    <ClInclude Include="Components\JukeBox.h" />
+    <ClInclude Include="Components\RemoveTarget.h" />
+    <ClInclude Include="Components\SkyBoxRenderer.h" />
+    <ClInclude Include="Core\GameObject.h" />
+    <ClInclude Include="Core\Math\MathLibs.h" />
+    <ClInclude Include="Core\Utilities\StringUtils.h" />
+    <ClInclude Include="Graphics\CubeMap.h" />
+    <ClInclude Include="Graphics\MappedValues.h" />
+    <ClInclude Include="Graphics\ResourceManagement\MeshResources.h" />
+    <ClInclude Include="Graphics\Shapes\Cube.h" />
     <ClInclude Include="Core\Core.h" />
     <ClInclude Include="Core\Input.h" />
     <ClInclude Include="Core\ScreenManager.h" />
-    <ClInclude Include="Graphics\BaseLight.h" />
-    <ClInclude Include="Graphics\BasicShader.h" />
-    <ClInclude Include="Graphics\BatchRenderer.h" />
-    <ClInclude Include="Graphics\Camera.h" />
-    <ClInclude Include="Graphics\DirectionalLight.h" />
+    <ClInclude Include="Components\Camera.h" />
     <ClInclude Include="Graphics\Material.h" />
     <ClInclude Include="Graphics\Mesh.h" />
-    <ClInclude Include="Graphics\PhongShader.h" />
-    <ClInclude Include="Graphics\PointLight.h" />
     <ClInclude Include="Graphics\Shader.h" />
-    <ClInclude Include="Graphics\SimpleRenderer.h" />
-    <ClInclude Include="Graphics\SpotLight.h" />
-    <ClInclude Include="Graphics\Sprite2D.h" />
+    <ClInclude Include="Graphics\Shapes\PlayerCube.h" />
+    <ClInclude Include="Graphics\Shapes\SkyBox.h" />
     <ClInclude Include="Graphics\Texture.h" />
     <ClInclude Include="Graphics\Transform.h" />
     <ClInclude Include="Graphics\Vertex.h" />
-    <ClInclude Include="Math\mat4.h" />
-    <ClInclude Include="Math\maths_func.h" />
-    <ClInclude Include="Math\Quaternion.h" />
-    <ClInclude Include="Math\vec2.h" />
-    <ClInclude Include="Math\vec3.h" />
-    <ClInclude Include="Math\vec4.h" />
-    <ClInclude Include="Graphics\Renderer.h" />
-    <ClInclude Include="Utilities\MeshLoader.h" />
-    <ClInclude Include="Sandbox\Game.h" />
-    <ClInclude Include="Utilities\ImageLoader.h" />
-    <ClInclude Include="Utilities\TextLoader.h" />
-    <ClInclude Include="Utilities\Timer.h" />
+    <ClInclude Include="Core\Math\mat4.h" />
+    <ClInclude Include="Core\Math\maths_func.h" />
+    <ClInclude Include="Core\Math\Quaternion.h" />
+    <ClInclude Include="Core\Math\vec2.h" />
+    <ClInclude Include="Core\Math\vec3.h" />
+    <ClInclude Include="Core\Math\vec4.h" />
+    <ClInclude Include="Components\MeshRenderer.h" />
+    <ClInclude Include="Graphics\RenderingEngine.h" />
+    <ClInclude Include="Components\Light.h" />
+    <ClInclude Include="Sandbox\Bitmap.h" />
+    <ClInclude Include="Sandbox\Level.h" />
+    <ClInclude Include="Sandbox\Player.h" />
+    <ClInclude Include="Sandbox\TestGame.h" />
+    <ClInclude Include="Core\Utilities\MeshLoader.h" />
+    <ClInclude Include="Core\Game.h" />
+    <ClInclude Include="Core\Utilities\ImageLoader.h" />
+    <ClInclude Include="Core\Utilities\TextLoader.h" />
+    <ClInclude Include="Core\Utilities\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Debug\Dimension.tlog\unsuccessfulbuild" />
-    <None Include="Resources\Shaders\basicFragment.frag" />
-    <None Include="Resources\Shaders\basicVertex.vert" />
-    <None Include="Resources\Shaders\phongFragment.frag" />
-    <None Include="Resources\Shaders\phongVertex.vert" />
+    <Content Include="Resources\Shaders\basicFragment.frag">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Content>
+    <Content Include="Resources\Shaders\basicVertex.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+      <FileType>Document</FileType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Content>
+    <Content Include="Resources\Shaders\forward-ambient.frag">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Content>
+    <Content Include="Resources\Shaders\forward-ambient.vert">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Content>
+    <Content Include="Resources\Shaders\phongFragment.frag">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Content>
+    <Content Include="Resources\Shaders\phongVertex.vert">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
+    </Content>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Resources\Textures\awesomeface.png" />
-    <Image Include="Resources\Textures\container.jpg" />
-    <Image Include="Resources\Textures\test.png" />
-    <Image Include="Resources\Textures\wall.jpg" />
+    <Image Include="Resources\CubeMaps\back.png" />
+    <Image Include="Resources\CubeMaps\bottom.png" />
+    <Image Include="Resources\CubeMaps\front.png" />
+    <Image Include="Resources\CubeMaps\left.png" />
+    <Image Include="Resources\CubeMaps\right.png" />
+    <Image Include="Resources\CubeMaps\top.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

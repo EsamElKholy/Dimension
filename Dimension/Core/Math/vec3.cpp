@@ -1,0 +1,173 @@
+#include "vec3.h"
+#include "quaternion.h"
+
+const vec3 vec3::UP(0, 1, 0);
+const vec3 vec3::DOWN(0, -1, 0);
+const vec3 vec3::LEFT(-1, 0, 0);
+const vec3 vec3::RIGHT(1, 0, 0);
+const vec3 vec3::FORWARD(0, 0, 1);
+const vec3 vec3::BACK(0, 0, -1);
+const vec3 vec3::ONE(1, 1, 1);
+const vec3 vec3::ZERO(0, 0, 0);
+
+vec3::vec3(const float &x, const float &y, const float &z){
+	this->x = x;
+	this->y = y;
+	this->z = z;
+}
+
+void vec3::set(const float &x, const float &y, const float &z){
+	this->x = x;
+	this->y = y;
+	this->z = z;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+float vec3::getLength(){
+	float len = sqrtf((x * x) + (y * y) + (z * z));
+	return len;
+}
+
+float vec3::max() const{
+	return fmaxf(x, fmaxf(y, z));
+}
+
+vec3& vec3::normalize(){
+	const float vectorLength = getLength();
+
+	x /= vectorLength;
+	y /= vectorLength;
+	z /= vectorLength;
+
+	return *this;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+vec3 vec3::cross(const vec3 &v) const{
+	const float _x = y * v.z - z * v.y;
+	const float _y = z * v.x - x * v.z;
+	const float _z = x * v.y - y * v.x;
+
+	vec3 ret(_x, _y, _z);
+
+	return ret;
+}
+
+float vec3::dot(const vec3 &vec) const{
+	float ret = (x * vec.x) + (y * vec.y) + (z * vec.z);
+	return ret;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+vec3 vec3::rotate(const float &angle, const vec3 &axis) const{
+	return rotate(Quaternion().rotate(angle, axis));
+}
+
+vec3 vec3::rotate(Quaternion &rot) const{
+	Quaternion conjugateQ = rot.conjugate();
+
+	Quaternion w = rot * (*this);
+	w = w * conjugateQ;
+
+	vec3 ret(w.x, w.y, w.z);
+
+	return ret;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+vec3 vec3::operator+(const vec3& right)
+{
+	vec3 ret(x + right.x, y + right.y, z + right.z);
+	return ret;
+}
+
+vec3 vec3::operator-(const vec3& right)
+{
+	vec3 ret(x - right.x, y - right.y, z - right.z);
+	return ret;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+vec3 vec3::operator*(float right) const
+{
+	vec3 ret(x * right,
+			 y * right,
+			 z * right);
+	return ret;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+vec3 vec3::operator/(float right) const
+{
+	vec3 ret(x / right,
+			 y / right,
+			 z / right);
+	return ret;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+vec3& vec3::operator+=(const vec3& other)
+{
+	x += other.x;
+	y += other.y;
+	z += other.z;
+
+	return *this;
+}
+
+vec3& vec3::operator-=(const vec3& other)
+{
+	x -= other.x;
+	y -= other.y;
+	z -= other.z;
+
+	return *this;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+vec3& vec3::operator*=(float other)
+{
+	x *= other;
+	y *= other;
+	z *= other;
+
+	return *this;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+vec3& vec3::operator/=(float other)
+{
+	x /= other;
+	y /= other;
+	z /= other;
+
+	return *this;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+bool vec3::operator==(const vec3& other)
+{
+	return x == other.x && y == other.y;
+}
+
+bool vec3::operator!=(const vec3& other)
+{
+	return !(*this == other);
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+std::ostream& operator<<(std::ostream& stream, const vec3& vector)
+{
+	stream << "vec2: (" << vector.x << ", " << vector.y << ")";
+	return stream;
+}

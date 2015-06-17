@@ -1,7 +1,7 @@
 #pragma once
 
 #include "GLFW\glfw3.h"
-#include "..\Math\vec2.h"
+#include "Math\vec2.h"
 
 class Input
 {

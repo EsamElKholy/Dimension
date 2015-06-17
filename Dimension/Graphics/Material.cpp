@@ -1,43 +1,32 @@
 #include "Material.h"
 
+Material::Material(void){
 
-
-
-Material::Material(const vec4 &color, float specualarIntensity, float specularPower){
-	if (glewInit() == GLEW_OK){
-		unsigned char whiteTexture[4];
-
-		whiteTexture[0] = 0;
-		whiteTexture[1] = 0;
-		whiteTexture[2] = 0;
-		whiteTexture[3] = 0;
-
-		m_texture = Texture(whiteTexture, 1, 1);
-	}
-	m_color = color;
-	texEnabled = true;
-
-	m_specularIntensity = specualarIntensity;
-	m_specularPower = specularPower;
-}
-
-Material::Material(const Texture &texture, const vec4 &color, float specualarIntensity, float specularPower){
-	m_texture = texture;
-	m_color = color;
-	texEnabled = true;
-
-	m_specularIntensity = specualarIntensity;
-	m_specularPower = specularPower;
 }
 
 Material::~Material()
 {
 }
 
-void Material::enableTexture(const bool &enable){
-	texEnabled = enable;
+void Material::addTexture(const std::string &name, Texture *texture){
+	textureMap[name] = texture;
 }
 
-bool Material::isTexEnabled() const{
-	return texEnabled;
-}
+//Material::Material(const vec4 &color, float specualarIntensity, float specularPower){
+//	m_texture = temp;
+//	m_color = color;
+//	m_specularIntensity = specualarIntensity;
+//	m_specularPower = specularPower;
+//}
+//
+//Material::Material(Texture *texture, const vec4 &color, float specualarIntensity, float specularPower){
+//	m_texture = texture;
+//	m_color = color;
+//	m_specularIntensity = specualarIntensity;
+//	m_specularPower = specularPower;
+//}
+//
+//Material::~Material()
+//{
+//	if (m_texture) delete m_texture;
+//}

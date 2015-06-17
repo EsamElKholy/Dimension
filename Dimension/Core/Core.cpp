@@ -1,11 +1,12 @@
 #include "Core.h"
 
 
-Core::Core(int width ,int height ,char* title)
+Core::Core(int width, int height, char* title, const int &UPS, TestGame &game)
 {
 	window = ScreenManager(width ,height ,title);
-	UPS = 60;
-	game.init();
+	this->UPS = UPS;
+	this->game = game;	
+	game.setEngine(this);
 }
 
 
@@ -30,46 +31,46 @@ void Core::run(){
 	int updates = 0;
 	int frames = 0;
 
-	while(m_isRunning){
+	renderingEngine.init();
+	game.init();
+
+	while (m_isRunning){
 		double currentTime = Timer::getTime();
-		delta += (currentTime - lastTime) * UPS;
-
-		//if((currentTime - lastTime) != 0)
-			Timer::setDelta(0.001f);
-
+		delta += (currentTime - lastTime) * (float)UPS;
 		lastTime = currentTime;
-			
+
 		while (delta >= 1.0)
 		{
-			if(window.isClosed()){
+			if (window.isClosed()){
 				stop();
 			}
+			
+			window.update();
+			game.update(1.0f / (float)UPS);
+			game.input(1.0f / (float)UPS);
 
-			update();
 			updates++;
 			delta--;
 		}
-		
 		render();
 		frames++;
 
-		if(Timer::getTime() - timer >= 1.0){
+		if (Timer::getTime() - timer >= 1.0){
 			timer = Timer::getTime();
-			std::cout<<"FPS: "<<frames<<", UPS:"<<updates<<"\n";
+			std::cout << "FPS: " << frames << ", UPS:" << updates /*<< ", delta: " << 1.0f / (float)UPS*/ << "\n";
 			frames = 0;
 			updates = 0;
 		}
 	}
-	window.dispose();	
-}
-
-void Core::update(){
-	window.update();
-	game.update();
+	dispose();
 }
 
 void Core::render(){
-	window.clear();
-	game.render();
+	game.render(&renderingEngine);
 	window.render();
+}
+
+void Core::dispose(){
+	//game.dispose();
+	window.dispose();
 }

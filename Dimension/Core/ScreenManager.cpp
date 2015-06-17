@@ -52,27 +52,11 @@ bool ScreenManager::init(){
 
 	glViewport(0 ,0 ,m_Width ,m_Height);
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	
-	glFrontFace(GL_CW);
-	glCullFace(GL_BACK);
-	glEnable(GL_CULL_FACE);
-
-	glEnable(GL_DEPTH_TEST);
-	glEnable(GL_DEPTH_CLAMP);
-
-	/*glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);*/
-
 	input = Input(window);
 
+	SoundManager::init();
+
 	return true;
-}
-
-
-
-void ScreenManager::clear() const{
-	glClear(GL_COLOR_BUFFER_BIT |GL_DEPTH_BUFFER_BIT);
 }
 
 void ScreenManager::render() const{
@@ -80,6 +64,7 @@ void ScreenManager::render() const{
 	if (error != GL_NO_ERROR)
 		std::cout << "OpenGL Error: " << error << std::endl;*/
 	glfwSwapBuffers(window);
+	
 }
 
 void ScreenManager::update() const{
@@ -94,13 +79,6 @@ bool ScreenManager::isClosed() const{
 }
 
 void ScreenManager::dispose() const{
+	SoundManager::clean();
 	glfwTerminate();
-}
-
-int ScreenManager::getWidth(){
-	return m_Width;
-}
-
-int ScreenManager::getHeight(){
-	return m_Height;
 }

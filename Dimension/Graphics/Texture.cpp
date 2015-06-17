@@ -4,22 +4,15 @@ Texture::Texture(void)
 {
 }
 
-Texture::Texture(char* data, const int &width, const int &height){
+Texture::Texture(char* data){
 	if (glewInit() == GLEW_OK){
-		ImageLoader::loadImage(data, width, height);
-		image = ImageLoader::getImage();
-		bindTexture(image, width, height, true);
+		int width, height;
+		image = ImageLoader::loadImage(data, width, height);
+		bindTexture(image, width, height);
 	}
 }
 
-Texture::Texture(unsigned char *data, const int &width, const int &height){
-	if (glewInit() == GLEW_OK){
-		image = data;
-		bindTexture(image, width, height, false);
-	}
-}
-
-void Texture::bindTexture(unsigned char* image, int width, int height, const bool &useLoader){
+void Texture::bindTexture(unsigned char* image, int width, int height){
 	glGenTextures(1, &textureID);
 
 	glBindTexture(GL_TEXTURE_2D, textureID);
@@ -27,14 +20,13 @@ void Texture::bindTexture(unsigned char* image, int width, int height, const boo
 	glTexParameteri(GL_TEXTURE_2D ,GL_TEXTURE_WRAP_S ,GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D ,GL_TEXTURE_WRAP_T ,GL_REPEAT);
 
-	glTexParameteri(GL_TEXTURE_2D ,GL_TEXTURE_MIN_FILTER ,GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D ,GL_TEXTURE_MAG_FILTER ,GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D ,GL_TEXTURE_MIN_FILTER ,GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	glTexImage2D(GL_TEXTURE_2D ,0 ,GL_RGBA ,width ,height ,0 ,GL_RGBA ,GL_UNSIGNED_BYTE ,image);
 	glGenerateMipmap(GL_TEXTURE_2D);
-
-	if (useLoader)
-		ImageLoader::dispose();
+	
+	ImageLoader::dispose();
 
 	glBindTexture(GL_TEXTURE_2D ,0);
 }
