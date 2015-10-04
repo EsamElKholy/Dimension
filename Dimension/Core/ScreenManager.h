@@ -5,7 +5,6 @@
 #include <iostream>
 #include <GLFW\glfw3.h>
 #include "Input.h"
-#include "..\Audio\SoundManager.h"
 
 class ScreenManager
 {

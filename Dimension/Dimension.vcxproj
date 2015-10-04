@@ -98,16 +98,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>SOIL.lib;glfw3.lib;glew32s.lib;opengl32.lib;gorilla.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreAllDefaultLibraries>
+      </IgnoreAllDefaultLibraries>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /Y /E "$(ProjectDir)Resources" "$(SolutionDir)bin\$(Configuration)\Resources\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AI Stuff\AStar.cpp" />
-    <ClCompile Include="AI Stuff\SearchProblem.cpp" />
-    <ClCompile Include="Audio\Sound.cpp" />
-    <ClCompile Include="Audio\SoundManager.cpp" />
     <ClCompile Include="Core\GameObject.cpp" />
     <ClCompile Include="Graphics\CubeMap.cpp" />
     <ClCompile Include="Graphics\ResourceManagement\MeshResources.cpp" />
@@ -141,20 +139,11 @@
     <ClCompile Include="Core\Utilities\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AI Stuff\AStar.h" />
-    <ClInclude Include="AI Stuff\Brain.h" />
-    <ClInclude Include="AI Stuff\Data.h" />
-    <ClInclude Include="AI Stuff\SearchProblem.h" />
-    <ClInclude Include="AI Stuff\State.h" />
-    <ClInclude Include="Audio\Sound.h" />
-    <ClInclude Include="Audio\SoundManager.h" />
-    <ClInclude Include="Components\AgentMove.h" />
     <ClInclude Include="Components\FreeLook.h" />
     <ClInclude Include="Components\FreeMove.h" />
     <ClInclude Include="Components\FreeMove_Custom.h" />
     <ClInclude Include="Components\GameComponent.h" />
     <ClInclude Include="Components\JukeBox.h" />
-    <ClInclude Include="Components\RemoveTarget.h" />
     <ClInclude Include="Components\SkyBoxRenderer.h" />
     <ClInclude Include="Core\GameObject.h" />
     <ClInclude Include="Core\Math\MathLibs.h" />

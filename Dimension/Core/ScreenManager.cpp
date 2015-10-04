@@ -54,8 +54,6 @@ bool ScreenManager::init(){
 
 	input = Input(window);
 
-	SoundManager::init();
-
 	return true;
 }
 
@@ -79,6 +77,5 @@ bool ScreenManager::isClosed() const{
 }
 
 void ScreenManager::dispose() const{
-	SoundManager::clean();
 	glfwTerminate();
 }

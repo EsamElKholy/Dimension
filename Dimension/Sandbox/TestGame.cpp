@@ -1,4 +1,3 @@
-#include "..\Components\AgentMove.h"
 #include "..\Components\Light.h"
 #include "..\Components\FreeLook.h"
 #include "..\Components\FreeMove.h"
@@ -47,7 +46,6 @@ void TestGame::init(){
 
 	initLights();
 
-	initSounds();
 	/******************************************************************************************/
 	
 	//GameObject *directional = new GameObject();
@@ -126,21 +124,13 @@ void TestGame::initPlayers(){
 
 	GameObject *player1 = new GameObject();
 	player1->addComponent(new MeshRenderer(new PlayerCube(vec3(0, 0, 0), 1.0f), material1));
-	player1->getTransform().setPos(playerPos[0]);
-
-	AgentMove *move1 = new AgentMove(playerIndex[0], 0, 0);
-	move1->setPath();
-	player1->addComponent(move1);
+	player1->getTransform().setPos(playerPos[0]);	
 
 	addObject(player1);
 
 	GameObject *player2 = new GameObject();
 	player2->addComponent(new MeshRenderer(new PlayerCube(vec3(0, 0, 0), 1.0f), material2));
 	player2->getTransform().setPos(playerPos[1]);
-
-	/*AgentMove *move2 = new AgentMove(playerIndex[1], 1, 1);
-	move2->setPath();
-	player2->addComponent(move2);*/
 	player2->addComponent(new FreeMove_Custom(10.0f, playerIndex[1]));
 
 	addObject(player2);
@@ -205,16 +195,4 @@ void TestGame::initLights(){
 	d2->getTransform().setRotation(Quaternion(-108, vec3(1, 1, 0)));
 
 	addObject(d2);
-}
-
-void TestGame::initSounds(){
-	
-	SoundManager::add(new Sound("Healed", "Resources\\Sounds\\FX_Qst_End.ogg"));
-	SoundManager::add(new Sound("BGM", "Resources\\Sounds\\01.ogg"));
-	
-
-	GameObject *jukebox = new GameObject();
-	jukebox->addComponent(new JukeBox());
-
-	addObject(jukebox);
 }

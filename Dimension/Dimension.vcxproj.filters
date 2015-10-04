@@ -99,22 +99,10 @@
     <ClCompile Include="Sandbox\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Audio\Sound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio\SoundManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Graphics\CubeMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Shapes\SkyBox.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AI Stuff\SearchProblem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AI Stuff\AStar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Graphics\Shapes\PlayerCube.cpp">
@@ -230,15 +218,6 @@
     <ClInclude Include="Sandbox\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Components\AgentMove.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio\Sound.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Audio\SoundManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Core\Utilities\StringUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -251,25 +230,7 @@
     <ClInclude Include="Components\SkyBoxRenderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AI Stuff\Data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AI Stuff\SearchProblem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AI Stuff\State.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AI Stuff\AStar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Components\RemoveTarget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Shapes\PlayerCube.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AI Stuff\Brain.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Components\FreeMove_Custom.h">

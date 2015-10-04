@@ -6,7 +6,6 @@
 #include "..\Core\Utilities\Timer.h"
 #include "..\Components\MeshRenderer.h"
 #include "..\Components\Camera.h"
-#include "..\Audio\SoundManager.h"
 
 class TestGame : public Game
 {
@@ -36,8 +35,7 @@ private:
 	void initTargets();
 	void initPlayers();
 	void initLevel();
-	void initLights();
-	void initSounds();
+	void initLights();	
 
 };
 
